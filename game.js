@@ -336,12 +336,13 @@ window.handleGameState = (timeScale) => {
         STATE.intervention.pausedEvent = STATE.intervention.activeEvent;
         STATE.intervention.remainingTime = STATE.intervention.eventEndTime - Date.now();
         endRandomEvent();
-    } else { // not paused state
-        if (STATE.intervention.pausedEvent)
-            triggerRandomEvent(
-                STATE.intervention.pausedEvent,
-                STATE.intervention.remainingTime
-            );
+    } else if (STATE.intervention.pausedEvent) { // not paused state
+        triggerRandomEvent(
+            STATE.intervention.pausedEvent,
+            STATE.intervention.remainingTime
+        );
+        STATE.intervention.pausedEvent = null;
+        STATE.intervention.remainingTime = 0;
     }
 
     window.setTimeScale(timeScale);
